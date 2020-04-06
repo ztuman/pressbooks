@@ -31,6 +31,7 @@ class Content {
 		'preview-players.brightcove.net',
 		'//docs.google.com/forms/',
 		'//www.google.com/maps/',
+
 	];
 
 	/**
@@ -433,11 +434,11 @@ class Content {
 		add_filter( 'oembed_ttl', '__return_zero', 999 );
 		add_filter(
 			'embed_defaults', function ( $attr ) {
-				// Embed cache keys are created by doing `md5( $url . serialize( $attr ) )`
-				// By adding an HTML5 Data Attribute we change the MD5, thereby busting the cache when exporting
-				$attr['data-pb-export'] = 'true';
-				return $attr;
-			}
+			// Embed cache keys are created by doing `md5( $url . serialize( $attr ) )`
+			// By adding an HTML5 Data Attribute we change the MD5, thereby busting the cache when exporting
+			$attr['data-pb-export'] = 'true';
+			return $attr;
+		}
 		);
 		add_filter( 'oembed_dataparse', [ $this, 'replaceOembed' ], 1, 3 );
 	}
@@ -455,20 +456,20 @@ class Content {
 		 */
 		add_filter(
 			'wp_video_shortcode', function ( $output, $atts, $video ) {
-				$src_attributes = array_merge( [ 'src' ], wp_get_video_extensions() );
-				foreach ( $src_attributes as $attribute ) {
-					if ( ! empty( $atts[ $attribute ] ) ) {
-						$src = $atts[ $attribute ];
-						break;
-					}
+			$src_attributes = array_merge( [ 'src' ], wp_get_video_extensions() );
+			foreach ( $src_attributes as $attribute ) {
+				if ( ! empty( $atts[ $attribute ] ) ) {
+					$src = $atts[ $attribute ];
+					break;
 				}
-				if ( empty( $src ) ) {
-					$src = $video;
-				}
-				$type = wp_check_filetype( $src, wp_get_mime_types() )['type'];
-				$output = "<video class='wp-video-shortcode' controls='controls'><source type='{$type}' src='{$src}' /><a href='{$src}'>{$src}</a></video>";
-				return $output;
-			}, 10, 3
+			}
+			if ( empty( $src ) ) {
+				$src = $video;
+			}
+			$type = wp_check_filetype( $src, wp_get_mime_types() )['type'];
+			$output = "<video class='wp-video-shortcode' controls='controls'><source type='{$type}' src='{$src}' /><a href='{$src}'>{$src}</a></video>";
+			return $output;
+		}, 10, 3
 		);
 	}
 
@@ -485,20 +486,20 @@ class Content {
 		 */
 		add_filter(
 			'wp_audio_shortcode', function ( $output, $atts, $audio ) {
-				$src_attributes = array_merge( [ 'src' ], wp_get_audio_extensions() );
-				foreach ( $src_attributes as $attribute ) {
-					if ( ! empty( $atts[ $attribute ] ) ) {
-						$src = $atts[ $attribute ];
-						break;
-					}
+			$src_attributes = array_merge( [ 'src' ], wp_get_audio_extensions() );
+			foreach ( $src_attributes as $attribute ) {
+				if ( ! empty( $atts[ $attribute ] ) ) {
+					$src = $atts[ $attribute ];
+					break;
 				}
-				if ( empty( $src ) ) {
-					$src = $audio;
-				}
-				$type = wp_check_filetype( $src, wp_get_mime_types() )['type'];
-				$output = "<audio class='wp-audio-shortcode' controls='controls'><source type='{$type}' src='{$src}' /><a href='{$src}'>{$src}</a></audio>";
-				return $output;
-			}, 10, 3
+			}
+			if ( empty( $src ) ) {
+				$src = $audio;
+			}
+			$type = wp_check_filetype( $src, wp_get_mime_types() )['type'];
+			$output = "<audio class='wp-audio-shortcode' controls='controls'><source type='{$type}' src='{$src}' /><a href='{$src}'>{$src}</a></audio>";
+			return $output;
+		}, 10, 3
 		);
 	}
 

@@ -105,6 +105,7 @@ class Api extends ImportGenerator {
 				// Do nothing, this is a compatibility wrapper that makes the generator work like a regular function
 			}
 		} catch ( \Exception $e ) {
+			var_dump($e);
 			return false;
 		}
 		return true;

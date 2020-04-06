@@ -130,6 +130,8 @@ class Wxr extends Import {
 			'chapters' => [],
 			'post_types' => [],
 			'allow_parts' => true,
+			'base_blog_url' => $xml['base_blog_url'],
+			'title' => $xml['title'],
 		];
 
 		/**
@@ -287,7 +289,7 @@ class Wxr extends Import {
 			if ( 'metadata' === $post_type ) {
 				$pid = $this->bookInfoPid();
 			} else {
-				$pid = $this->insertNewPost( $post_type, $p, $html, $chapter_parent, $current_import['default_post_status'] );
+				$pid = $this->insertNewPost( $post_type, $p, $html, $chapter_parent, isset($current_import['default_post_status'] ) ? $current_import['default_post_status'] : $p['status'] );
 				if ( 'part' === $post_type ) {
 					$chapter_parent = $pid;
 				}
@@ -660,12 +662,19 @@ class Wxr extends Import {
 				continue; // Not an attachment, skip
 			}
 			$x = [];
-			foreach ( $item['postmeta'] as $meta ) {
-				if ( $meta['key'] === '_wp_attachment_metadata' ) {
-					$x = safer_unserialize( $meta['value'] );
-					break;
+
+			if (isset($item['postmeta']) && is_array(isset($item['postmeta']))) {
+
+				foreach ( $item['postmeta'] as $meta ) {
+					if ( $meta['key'] === '_wp_attachment_metadata' ) {
+						$x = safer_unserialize( $meta['value'] );
+						break;
+					}
 				}
+
 			}
+
+
 			if ( ! is_array( $x ) || empty( $x ) ) {
 				continue; // Something went wrong, skip
 			}

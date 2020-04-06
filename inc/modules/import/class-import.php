@@ -135,6 +135,7 @@ abstract class Import {
 
 		$results = $q->query( $args );
 
+
 		return absint( $results[0]->ID );
 	}
 

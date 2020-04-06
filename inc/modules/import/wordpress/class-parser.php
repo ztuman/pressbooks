@@ -75,8 +75,15 @@ class Parser {
 		// Ladies and gentlemen, start your parsing
 		// ------------------------------------------------------------------------------------------------------------
 
+
+		$title = $xml->xpath( '/rss/channel/title' );
+		$title = (string) trim( $title[0] );
+
 		$base_url = $xml->xpath( '/rss/channel/wp:base_site_url' );
 		$base_url = (string) trim( $base_url[0] );
+
+		$base_blog_url = $xml->xpath( '/rss/channel/wp:base_blog_url' );
+		$base_blog_url = (string) trim( $base_blog_url[0] );
 
 		$namespaces = $xml->getDocNamespaces();
 		if ( ! isset( $namespaces['wp'] ) ) {
@@ -249,7 +256,9 @@ class Parser {
 			'categories' => $categories,
 			'tags' => $tags,
 			'terms' => $terms,
+			'title' => $title,
 			'base_url' => $base_url,
+			'base_blog_url' => $base_blog_url,
 			'version' => $wxr_version,
 		];
 	}
