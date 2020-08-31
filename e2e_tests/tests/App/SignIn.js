@@ -11,7 +11,10 @@ module.exports = {
 			.click('input[id=wp-submit]')
 			.pause(3000)
 			.waitForElementVisible('#wp-admin-bar-my-account')
-			.assert.containsText('#wp-admin-bar-my-account', 'Hello, ' + process.env.ADMIN_USERNAME)
+			.assert.containsText(
+				'#wp-admin-bar-my-account',
+				'Hello, ' + process.env.ADMIN_USERNAME
+			)
 			.end();
 	}
 };
