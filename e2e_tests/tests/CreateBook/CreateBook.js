@@ -1,17 +1,8 @@
 module.exports = {
 	beforeEach: function (browser) {
 		console.log('Signing in...');
-		browser
-			.url(process.env.HOST_TEST + '/wp/wp-login.php')
-			.waitForElementVisible('body')
-			.assert.visible('#user_login')
-			.assert.visible('#user_pass')
-			.assert.visible('#wp-submit')
-			.setValue('#user_login', process.env.ADMIN_USERNAME)
-			.setValue('#user_pass', process.env.ADMIN_PASSWORD)
-			.click('input[id=wp-submit]')
-			.pause(3000)
-			.waitForElementVisible('#wp-admin-bar-my-account');
+		browser.globals.functionHelpers = require('../../helpers/functions.js');
+		browser = browser.globals.functionHelpers.loginAdminUser(browser);
 		if (browser.globals.now === undefined) {
 			browser.globals.now = Date.now();
 		}
@@ -19,7 +10,6 @@ module.exports = {
 	'Creating test book and 2 chapters': function (browser) {
 		let bookURL = 'e2etestbook' + browser.globals.now;
 		const bookData = require('../../dataInputs/book.js');
-		const functionHelpers = require('../../helpers/functions.js');
 		let totalCreatedChapters = 1; // default chapter
 
 		//Create book
@@ -37,7 +27,7 @@ module.exports = {
 			);
 		// create parts
 		for (let p = 0; p < bookData.parts.length; p ++) {
-			browser = functionHelpers.createPost(
+			browser = browser.globals.functionHelpers.createPost(
 				browser,
 				bookURL,
 				'part',
@@ -46,7 +36,7 @@ module.exports = {
 			);
 			// create chapters
 			for (let c = 0; c < bookData.parts[p].chapters.length; c ++) {
-				browser = functionHelpers.createPost(
+				browser = browser.globals.functionHelpers.createPost(
 					browser,
 					bookURL,
 					'chapter',
@@ -59,7 +49,7 @@ module.exports = {
 		}
 		// create front and back matters
 		for (let fm = 0; fm < bookData.frontMatter.length; fm ++) {
-			browser = functionHelpers.createPost(
+			browser = browser.globals.functionHelpers.createPost(
 				browser,
 				bookURL,
 				'front-matter',
@@ -68,7 +58,7 @@ module.exports = {
 			);
 		}
 		for (let bm = 0; bm < bookData.backMatter.length; bm ++) {
-			browser = functionHelpers.createPost(
+			browser = browser.globals.functionHelpers.createPost(
 				browser,
 				bookURL,
 				'back-matter',
