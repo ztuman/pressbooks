@@ -81,8 +81,9 @@ module.exports = {
 			.click('.button-primary')
 			.pause(2000)
 			.waitForElementVisible('.h5p-editor-iframe')
-			.pause(2000)
+			.pause(3000)
 			.frame(0)
+			.waitForElementVisible('#h5p-multichoice')
 			.click('#h5p-multichoice')
 			.pause(2000)
 			.elements('css selector', '.button-install', (btn) => {
@@ -95,7 +96,7 @@ module.exports = {
 						if (text.value.search('Install') >= 0) {
 							browser.elementIdClick(v.ELEMENT,  () => {
 								browser
-									.pause(3000)
+									.pause(5000)
 									.waitForElementVisible('.button-use')
 									.click('.button-use')
 									.pause(2000)
