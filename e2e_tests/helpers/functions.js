@@ -1,7 +1,7 @@
 module.exports = {
 	loginAdminUser: function (browser) {
 		return browser
-			.url(process.env.HOST_TEST + '/wp/wp-login.php')
+			.url(process.env.HOST_TEST + 'wp/wp-login.php')
 			.waitForElementVisible('body')
 			.assert.visible('#user_login')
 			.assert.visible('#user_pass')

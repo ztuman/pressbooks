@@ -31,7 +31,8 @@ module.exports = {
 				},
 				chromeOptions: {
 					w3c: false
-				}
+				},
+				acceptSslCerts : true
 			},
 			webdriver: {
 				port: 4444,
@@ -43,9 +44,10 @@ module.exports = {
 		firefox: {
 			desiredCapabilities : {
 				browserName : 'firefox',
-				alwaysMatch: {
-					acceptInsecureCerts: true
-				}
+				acceptInsecureCerts: true,
+				acceptSslCerts : true,
+				ignoreProtectedModeSettings: true,
+				unexpectedAlertBehaviour: 'accept'
 			},
 			webdriver: {
 				start_process: true,
