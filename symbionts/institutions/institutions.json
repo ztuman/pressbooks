@@ -1,4 +1,19 @@
 [
+ {
+    "country": "Europa",
+    "regions": [
+      {
+        "name": "Turkiye",
+        "institutions": [
+          {
+            "code": "TR-IST-001",
+            "name": "Bogaziçi University",
+            "url": "https:\/\/bogazici.edu.tr\/"
+          }
+        ]
+      }
+    ]
+  },
   {
     "country": "Asia",
     "regions": [
